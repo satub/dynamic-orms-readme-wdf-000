@@ -14,3 +14,5 @@ SQL
 
 DB[:conn].execute(sql)
 DB[:conn].results_as_hash = true
+
+#{"id"=>id_primary_key, "name"=>song_name, "album"=>album_name, 0 => 1, 1 => "Hello", 2 => "25"}

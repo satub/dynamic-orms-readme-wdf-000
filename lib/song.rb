@@ -1,5 +1,5 @@
 require_relative "../config/environment.rb"
-require 'active_support/inflector'
+require 'active_support/inflector'  #provides the .pluralize method
 
 class Song
 
@@ -11,7 +11,7 @@ class Song
   def self.column_names
     DB[:conn].results_as_hash = true
 
-    sql = "pragma table_info('#{table_name}')"
+    sql = "PRAGMA table_info('#{table_name}')"
 
     table_info = DB[:conn].execute(sql)
     column_names = []
@@ -22,10 +22,10 @@ class Song
   end
 
   self.column_names.each do |col_name|
-    attr_accessor col_name.to_sym
+    attr_accessor col_name.to_sym #changes col names to syms and creates attr_accessors: "id" -> :id , "name" -> :name, "album" -> :album
   end
 
-  def initialize(options={})
+  def initialize(options={}) #works as long as each hash key aka property has a corresponding attr_accessor
     options.each do |property, value|
       self.send("#{property}=", value)
     end
@@ -59,6 +59,3 @@ class Song
   end
 
 end
-
-
-

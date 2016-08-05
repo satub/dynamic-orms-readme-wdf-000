@@ -1,3 +1,5 @@
+#! /usr/bin/env ruby
+
 require 'sqlite3'
 
 require_relative "../lib/song.rb"
@@ -9,4 +11,18 @@ puts "song name: " + song.name
 puts "song album: " + song.album
 song.save
 
-DB[:conn].execute("SELECT * FROM songs")
+song = Song.new(name: "Show Must Go On", album: "Innuendo")
+puts "song name: " + song.name
+puts "song album: " + song.album
+song.save
+
+
+puts "*********"
+song = Song.find_by_name("Show Must Go On")[0]
+puts "#{song["id"]}: #{song["name"]},  #{song["album"]}"
+puts "*********"
+#should be the same thing for all entries:
+query = DB[:conn].execute("SELECT * FROM songs")
+query.each do |row|
+  puts "#{row["id"]}: #{row["name"]}, #{row["album"]}"
+end
